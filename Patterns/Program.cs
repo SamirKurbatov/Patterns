@@ -83,3 +83,38 @@ using Subsystem = Patterns.Subsystem;
     ITransport camelTransport = new CamelToTransportAdapter(camel);
     driver.Travel(camelTransport);
 }
+
+// FlyWeight
+{
+    int extrinsicstate = 22;
+
+    FlyweightFactory flyweightFactory = new FlyweightFactory();
+
+    Flyweight fx = flyweightFactory.GetFlyweight("X");
+    fx.Operation(--extrinsicstate);
+
+    Flyweight flyweight = flyweightFactory.GetFlyweight("Y");
+    flyweight.Operation(--extrinsicstate);
+
+    Flyweight fd = flyweightFactory.GetFlyweight("D");
+    fd.Operation(--extrinsicstate);
+
+    UnsharedConcreteFlyweight unsharedConcreteFlyweight = new UnsharedConcreteFlyweight();
+
+    unsharedConcreteFlyweight.Operation(--extrinsicstate);
+}
+
+// Proxy
+{
+    var client = new ProxyClient();
+
+    Console.WriteLine("Client: Executing the client code with a real subject: ");
+    var realSubject = new RealSubject();
+    client.ClientCode(realSubject);
+    
+    Console.WriteLine();
+
+    Console.WriteLine($"Client: Executing the same client code with a proxy: ");
+    var proxy = new Proxy(realSubject);
+    client.ClientCode(proxy);
+}
